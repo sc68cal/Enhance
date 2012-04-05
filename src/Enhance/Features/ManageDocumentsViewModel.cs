@@ -17,21 +17,15 @@ namespace Enhance.Features
     {
         public ManageDocumentsViewModel(EnhanceImage image)
         {
+            var dirinfo = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
             BackHomeCommand = new DelegateCommand(NavigateBack);
-
-            Directories = new Root();
-
-            //foreach(var drive in drives)
-            //{
-            //    Directories.Add(new FileInfo(drive.RootDirectory.FullName));
-            //}
+            Files = new ObservableCollection<FileInfo>(dirinfo.EnumerateFiles());
+            Directories = new ObservableCollection<DirectoryInfo>(dirinfo.EnumerateDirectories());
         }
 
         public ICommand BackHomeCommand { get; private set; }
 
-        public Root Directories { get; set; }
-        //public ObservableCollection<FileSystemInfo> Directories { get; set; }
-
+        public ObservableCollection<DirectoryInfo> Directories { get; set; }
         public ObservableCollection<FileInfo> Files { get; set; }
         public FileInfo SelectedFile { get; set; }
 
